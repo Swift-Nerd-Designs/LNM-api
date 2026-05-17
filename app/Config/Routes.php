@@ -144,3 +144,28 @@ $routes->post('admin/upload-pdf',     '\App\Infrastructure\Http\Controllers\Admi
 $routes->post('admin/pages',          '\App\Infrastructure\Http\Controllers\Admin\Pages::create',    ['filter' => 'adminonlyauth']);
 $routes->put('admin/pages/(:segment)','\App\Infrastructure\Http\Controllers\Admin\Pages::update/$1', ['filter' => 'adminonlyauth']);
 $routes->delete('admin/pages/(:segment)', '\App\Infrastructure\Http\Controllers\Admin\Pages::delete/$1', ['filter' => 'adminonlyauth']);
+
+// ── Content: Newsletters & Documents (public) ─────────────────────────────
+$routes->get('content/newsletters', '\App\Infrastructure\Http\Controllers\Content\Newsletters::index');
+$routes->get('content/documents',   '\App\Infrastructure\Http\Controllers\Content\Documents::index');
+
+// ── Newsletter subscriptions (public) ─────────────────────────────────────
+$routes->post('newsletter/subscribe',   '\App\Infrastructure\Http\Controllers\Content\NewsletterSubscriptions::subscribe');
+$routes->get( 'newsletter/confirm',     '\App\Infrastructure\Http\Controllers\Content\NewsletterSubscriptions::confirm');
+$routes->get( 'newsletter/unsubscribe', '\App\Infrastructure\Http\Controllers\Content\NewsletterSubscriptions::unsubscribe');
+
+// ── Admin: Newsletters ─────────────────────────────────────────────────────
+$routes->get(   'admin/newsletters',        '\App\Infrastructure\Http\Controllers\Admin\Newsletters::index',        ['filter' => 'adminonlyauth']);
+$routes->post(  'admin/newsletters',        '\App\Infrastructure\Http\Controllers\Admin\Newsletters::create',       ['filter' => 'adminonlyauth']);
+$routes->put(   'admin/newsletters/(:num)', '\App\Infrastructure\Http\Controllers\Admin\Newsletters::update/$1',    ['filter' => 'adminonlyauth']);
+$routes->delete('admin/newsletters/(:num)', '\App\Infrastructure\Http\Controllers\Admin\Newsletters::delete/$1',    ['filter' => 'adminonlyauth']);
+
+// ── Admin: Documents ───────────────────────────────────────────────────────
+$routes->get(   'admin/documents',        '\App\Infrastructure\Http\Controllers\Admin\Documents::index',        ['filter' => 'adminonlyauth']);
+$routes->post(  'admin/documents',        '\App\Infrastructure\Http\Controllers\Admin\Documents::create',       ['filter' => 'adminonlyauth']);
+$routes->put(   'admin/documents/(:num)', '\App\Infrastructure\Http\Controllers\Admin\Documents::update/$1',    ['filter' => 'adminonlyauth']);
+$routes->delete('admin/documents/(:num)', '\App\Infrastructure\Http\Controllers\Admin\Documents::delete/$1',    ['filter' => 'adminonlyauth']);
+
+// ── Admin: Newsletter Subscribers ─────────────────────────────────────────
+$routes->get(   'admin/newsletter/subscribers',        '\App\Infrastructure\Http\Controllers\Admin\NewsletterSubscribers::index',       ['filter' => 'adminonlyauth']);
+$routes->delete('admin/newsletter/subscribers/(:num)', '\App\Infrastructure\Http\Controllers\Admin\NewsletterSubscribers::delete/$1',    ['filter' => 'adminonlyauth']);

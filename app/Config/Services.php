@@ -453,4 +453,98 @@ class Services extends BaseService
             static::invoicePdf(),
         );
     }
+
+    // ── Newsletters & Documents (sc-619) ──────────────────────────────────
+
+    public static function newsletterRepository(bool $getShared = true): \App\Domain\Content\NewsletterRepositoryInterface
+    {
+        if ($getShared) return static::getSharedInstance('newsletterRepository');
+        return new \App\Infrastructure\Persistence\MySqlNewsletterRepository();
+    }
+
+    public static function documentRepository(bool $getShared = true): \App\Domain\Content\DocumentRepositoryInterface
+    {
+        if ($getShared) return static::getSharedInstance('documentRepository');
+        return new \App\Infrastructure\Persistence\MySqlDocumentRepository();
+    }
+
+    public static function subscriberRepository(bool $getShared = true): \App\Domain\Content\NewsletterSubscriberRepositoryInterface
+    {
+        if ($getShared) return static::getSharedInstance('subscriberRepository');
+        return new \App\Infrastructure\Persistence\MySqlNewsletterSubscriberRepository();
+    }
+
+    public static function newsletterSubscriptionMailer(bool $getShared = true): \App\Application\Ports\NewsletterSubscriptionMailerInterface
+    {
+        if ($getShared) return static::getSharedInstance('newsletterSubscriptionMailer');
+        return new \App\Infrastructure\Services\NewsletterSubscriptionMailer(
+            static::settingsRepository(),
+        );
+    }
+
+    public static function saveNewsletterHandler(bool $getShared = true): \App\Application\Content\Handlers\SaveNewsletterHandler
+    {
+        if ($getShared) return static::getSharedInstance('saveNewsletterHandler');
+        return new \App\Application\Content\Handlers\SaveNewsletterHandler(static::newsletterRepository());
+    }
+
+    public static function deleteNewsletterHandler(bool $getShared = true): \App\Application\Content\Handlers\DeleteNewsletterHandler
+    {
+        if ($getShared) return static::getSharedInstance('deleteNewsletterHandler');
+        return new \App\Application\Content\Handlers\DeleteNewsletterHandler(static::newsletterRepository());
+    }
+
+    public static function listNewslettersHandler(bool $getShared = true): \App\Application\Content\Handlers\ListNewslettersHandler
+    {
+        if ($getShared) return static::getSharedInstance('listNewslettersHandler');
+        return new \App\Application\Content\Handlers\ListNewslettersHandler(static::newsletterRepository());
+    }
+
+    public static function saveDocumentHandler(bool $getShared = true): \App\Application\Content\Handlers\SaveDocumentHandler
+    {
+        if ($getShared) return static::getSharedInstance('saveDocumentHandler');
+        return new \App\Application\Content\Handlers\SaveDocumentHandler(static::documentRepository());
+    }
+
+    public static function deleteDocumentHandler(bool $getShared = true): \App\Application\Content\Handlers\DeleteDocumentHandler
+    {
+        if ($getShared) return static::getSharedInstance('deleteDocumentHandler');
+        return new \App\Application\Content\Handlers\DeleteDocumentHandler(static::documentRepository());
+    }
+
+    public static function listDocumentsHandler(bool $getShared = true): \App\Application\Content\Handlers\ListDocumentsHandler
+    {
+        if ($getShared) return static::getSharedInstance('listDocumentsHandler');
+        return new \App\Application\Content\Handlers\ListDocumentsHandler(static::documentRepository());
+    }
+
+    public static function subscribeNewsletterHandler(bool $getShared = true): \App\Application\Content\Handlers\SubscribeNewsletterHandler
+    {
+        if ($getShared) return static::getSharedInstance('subscribeNewsletterHandler');
+        return new \App\Application\Content\Handlers\SubscribeNewsletterHandler(
+            static::subscriberRepository(),
+            static::newsletterSubscriptionMailer(),
+        );
+    }
+
+    public static function confirmSubscriptionHandler(bool $getShared = true): \App\Application\Content\Handlers\ConfirmSubscriptionHandler
+    {
+        if ($getShared) return static::getSharedInstance('confirmSubscriptionHandler');
+        return new \App\Application\Content\Handlers\ConfirmSubscriptionHandler(static::subscriberRepository());
+    }
+
+    public static function unsubscribeNewsletterHandler(bool $getShared = true): \App\Application\Content\Handlers\UnsubscribeNewsletterHandler
+    {
+        if ($getShared) return static::getSharedInstance('unsubscribeNewsletterHandler');
+        return new \App\Application\Content\Handlers\UnsubscribeNewsletterHandler(
+            static::subscriberRepository(),
+            static::newsletterSubscriptionMailer(),
+        );
+    }
+
+    public static function listSubscribersHandler(bool $getShared = true): \App\Application\Content\Handlers\ListSubscribersHandler
+    {
+        if ($getShared) return static::getSharedInstance('listSubscribersHandler');
+        return new \App\Application\Content\Handlers\ListSubscribersHandler(static::subscriberRepository());
+    }
 }

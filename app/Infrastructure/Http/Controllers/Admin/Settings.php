@@ -28,7 +28,9 @@ class Settings extends BaseController
         'whatsapp_number', 'whatsapp_display',
         'address_physical', 'address_postal',
         // Navigation
-        'nav_items', 'nav_cta_label', 'nav_cta_href',
+        'nav_items', 'nav_cta_label', 'nav_cta_href', 'nav_align',
+        // Newsletter
+        'newsletters_enabled',
     ];
 
     /** Keys that are write-only — returned as '••••••••' when set, empty string when not set. */
