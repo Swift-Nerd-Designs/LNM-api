@@ -157,12 +157,13 @@ Products have `track_stock` (boolean) and `stock_qty`. Variants have their own `
 ```
 
 ## Customer Auth — Current State
-Customer auth uses **Bearer token** in `Authorization` header + `customer_sessions` DB table.
+Customer auth uses an **httpOnly cookie** (`jnv_customer_session` — rename per client slug) with Bearer token as fallback. Both the filter and checkout read the cookie first.
 ```php
-// CustomerAuthFilter reads:
-$token = substr($request->getHeaderLine('Authorization'), 7);
+// CustomerAuthFilter / Checkout reads:
+$token = $this->request->getCookie('jnv_customer_session')
+    ?? substr($this->request->getHeaderLine('Authorization'), 7);
 ```
-RBAC Epic A will migrate this to httpOnly cookie. Until then, keep Bearer header approach.
+Cookie is set on login (`SameSite=Lax`, `HttpOnly`, `Secure` in prod). The customer session table is `customer_sessions`.
 
 ## Rate Limits Applied
 | Endpoint | Limit |
