@@ -30,17 +30,34 @@ class MainSeeder extends Seeder
     private function seedSettings(): void
     {
         $settings = [
-            // Site identity — replace with client values
-            'site_name'       => 'Client Site',
-            'email'           => 'hello@clientdomain.com',
-            'phone_mobile'    => '',
-            'address_physical'=> '',
+            // ── Site identity ────────────────────────────────────────────
+            'site_name'        => 'LNM Accountants',
+            'tagline'          => 'Maximising Your Financial Potential',
+            'email'            => 'info@lnmaccountants.co.za',       // placeholder
+            'phone_mobile'     => '+27 00 000 0000',                  // placeholder
+            'whatsapp_number'  => '27000000000',                      // placeholder — digits only
+            'whatsapp_display' => '+27 00 000 0000',                  // placeholder
+            'address_physical' => 'Secunda, Mpumalanga, South Africa',
 
-            // Navigation — JSON array of { label, href } objects
-            // e.g. [{"label":"About","href":"/about"},{"label":"Downloads","href":"/downloads"}]
-            'nav_items'     => '[]',
-            'nav_cta_label' => 'Request a Quote',
-            'nav_cta_href'  => '/contact',
+            // ── Theme ────────────────────────────────────────────────────
+            'active_theme'     => 'lnm',
+
+            // ── Navigation ───────────────────────────────────────────────
+            'nav_items'     => json_encode([
+                ['label' => 'About',    'href' => '#about'],
+                ['label' => 'Services', 'href' => '#services'],
+                ['label' => 'Contact',  'href' => '#contact'],
+            ]),
+            'nav_cta_label' => 'Book a Consultation',
+            'nav_cta_href'  => '#contact',
+            'nav_align'     => 'right',
+
+            // ── Accreditations ───────────────────────────────────────────
+            'accreditations' => json_encode([
+                'Registered Tax Practitioner',
+                'Registered Business Accountant (SAICA/SAIPA)',
+                'SARS Compliant',
+            ]),
         ];
 
         foreach ($settings as $key => $value) {
@@ -75,22 +92,55 @@ class MainSeeder extends Seeder
 
             // ── Home ──────────────────────────────────────────────────────
             'home' => [
-                'seoTitle'       => 'Home — Client Site',
-                'seoDescription' => 'Welcome to our website.',
-                'content'        => (object) [],
-            ],
-
-            // ── About ─────────────────────────────────────────────────────
-            'about' => [
-                'seoTitle'       => 'About — Client Site',
-                'seoDescription' => 'Learn more about us.',
-                'content'        => (object) [],
+                'seoTitle'       => 'LNM Accountants | Professional Tax & Accounting Services Secunda',
+                'seoDescription' => 'Registered accountants and tax practitioners serving start-ups to large enterprises in Secunda, Mpumalanga. SAICA, SAIPA and SARS registered.',
+                'eyebrow'        => 'SAICA · SAIPA · SARS Registered · Secunda, Mpumalanga',
+                'title'          => 'Maximising Your Financial Potential',
+                'body'           => 'Registered accountants and tax practitioners serving start-ups to large-scale enterprises across Mpumalanga and beyond.',
+                'image'          => 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80',
+                'content'        => [
+                    'services' => [
+                        [
+                            'num'   => '01',
+                            'title' => 'Accounting & Bookkeeping',
+                            'href'  => '#contact',
+                            'items' => [
+                                'Day-to-day ledger management',
+                                'Annual financial statements',
+                                'Management accounts',
+                                'Payroll processing',
+                            ],
+                        ],
+                        [
+                            'num'   => '02',
+                            'title' => 'Tax Compliance',
+                            'href'  => '#contact',
+                            'items' => [
+                                'Tax returns & restructuring',
+                                'Provisional tax management',
+                                'VAT submissions',
+                                'Strategic compliance advice',
+                            ],
+                        ],
+                        [
+                            'num'   => '03',
+                            'title' => 'Business Advisory',
+                            'href'  => '#contact',
+                            'items' => [
+                                'Entity setup & registration',
+                                'Financial health analysis',
+                                'Start-up structuring',
+                                'Growth strategy support',
+                            ],
+                        ],
+                    ],
+                ],
             ],
 
             // ── Contact ───────────────────────────────────────────────────
             'contact' => [
-                'seoTitle'       => 'Contact — Client Site',
-                'seoDescription' => 'Get in touch with us.',
+                'seoTitle'       => 'Contact — LNM Accountants',
+                'seoDescription' => 'Get in touch with LNM Accountants in Secunda, Mpumalanga.',
                 'content'        => (object) [],
             ],
 
