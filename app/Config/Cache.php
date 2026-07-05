@@ -86,6 +86,15 @@ class Cache extends BaseConfig
         'mode'      => 0640,
     ];
 
+    public function __construct()
+    {
+        parent::__construct();
+        $path = env('cache.storePath');
+        if ($path) {
+            $this->file['storePath'] = rtrim($path, '/') . '/';
+        }
+    }
+
     /**
      * -------------------------------------------------------------------------
      * Memcached settings
